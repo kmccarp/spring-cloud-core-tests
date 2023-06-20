@@ -36,8 +36,7 @@ public class MyDefaultRibbonConfig {
 
 	@Bean
 	public ServerListSubsetFilter<Server> serverListFilter() {
-		ServerListSubsetFilter<Server> filter = new ServerListSubsetFilter<Server>();
-		return filter;
+		return new ServerListSubsetFilter<Server>();
 	}
 
 	public static class BazServiceList extends ConfigurationBasedServerList {

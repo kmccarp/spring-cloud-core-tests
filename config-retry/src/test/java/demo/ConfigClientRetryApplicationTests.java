@@ -45,16 +45,13 @@ public class ConfigClientRetryApplicationTests {
 	public static void delayConfigServer() {
 		int port = TestSocketUtils.findAvailableTcpPort();
 		System.setProperty("spring.cloud.config.uri", "http://localhost:" + port);
-		Executors.newSingleThreadExecutor().execute(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(2000L);
-				}
-				catch (InterruptedException e) {
-				}
-				context = ConfigServer.start("--server.port=" + port);
+		Executors.newSingleThreadExecutor().execute(() -> {
+			try {
+				Thread.sleep(2000L);
 			}
+			catch (InterruptedException e) {
+			}
+			context = ConfigServer.start("--server.port=" + port);
 		});
 	}
 	
@@ -81,9 +78,7 @@ public class ConfigClientRetryApplicationTests {
 		Object[] methodInterceptors = ((Map)obj).values().toArray();
 		RetryOperationsInterceptor interceptor = (RetryOperationsInterceptor)methodInterceptors[0];
 		retryTemplate = (RetryTemplate)ReflectionTestUtils.getField(
-				interceptor, "retryOperations");;
-
-		ExponentialBackOffPolicy backoff = (ExponentialBackOffPolicy) ReflectionTestUtils
+				interceptor, "retryOperations");ExponentialBackOffPolicy backoff = (ExponentialBackOffPolicy) ReflectionTestUtils
 				.getField(retryTemplate, "backOffPolicy");
 		assertEquals(3000, backoff.getInitialInterval());
 	}
