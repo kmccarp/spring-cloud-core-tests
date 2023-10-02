@@ -81,9 +81,7 @@ public class ConfigClientRetryApplicationTests {
 		Object[] methodInterceptors = ((Map)obj).values().toArray();
 		RetryOperationsInterceptor interceptor = (RetryOperationsInterceptor)methodInterceptors[0];
 		retryTemplate = (RetryTemplate)ReflectionTestUtils.getField(
-				interceptor, "retryOperations");;
-
-		ExponentialBackOffPolicy backoff = (ExponentialBackOffPolicy) ReflectionTestUtils
+				interceptor, "retryOperations");ExponentialBackOffPolicy backoff = (ExponentialBackOffPolicy) ReflectionTestUtils
 				.getField(retryTemplate, "backOffPolicy");
 		assertEquals(3000, backoff.getInitialInterval());
 	}
