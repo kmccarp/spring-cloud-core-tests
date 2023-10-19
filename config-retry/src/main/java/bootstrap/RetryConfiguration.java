@@ -29,7 +29,7 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
  */
 public class RetryConfiguration {
 
-	private static Logger log = LoggerFactory.getLogger(RetryConfiguration.class);
+	private static final Logger log = LoggerFactory.getLogger(RetryConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean(name = "configServerRetryInterceptor")
